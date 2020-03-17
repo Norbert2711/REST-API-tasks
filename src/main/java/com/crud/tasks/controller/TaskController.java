@@ -24,7 +24,7 @@ private TaskMapper taskMapper;
 
     @RequestMapping(method = RequestMethod.GET, value = "/getTasks")
     public List<TaskDto> getTasks() {
-        return new taskMapper.mapToTaskDtoList(service.getAllTasks());
+        return taskMapper.mapTaskDtoList(service.getAllTasks());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/tasks/{taskId}")
