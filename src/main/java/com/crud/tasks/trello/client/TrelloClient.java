@@ -31,7 +31,7 @@ public class TrelloClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    private List<TrelloBoardDto> getTrelloBoards() {
+    public List<TrelloBoardDto> getTrelloBoards() {
 
         URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/norbert2711/boards")
                 .queryParam("key", trelloAppKey)
@@ -47,5 +47,4 @@ public class TrelloClient {
         }
         return new ArrayList<>();
     }
-
 }
