@@ -15,8 +15,10 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 		compileOnly('org.projectlombok:lombok')
 		annotationProcessor('org.projectlombok:lombok')
 
@@ -33,7 +35,7 @@ dependencies {
 		compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
 
 		//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-	}
+
 }
 
 test {
