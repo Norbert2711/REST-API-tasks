@@ -39,18 +39,24 @@ public class TrelloClient {
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
                 .queryParam("userName",userName)
-                .queryParam("fields", "name,id").build().encode().toUri();
+                .queryParam("fields", "name,id")
+                .queryParam("lists","all").build().encode().toUri();
+
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
+
         if (boardsResponse != null) {
             return Arrays.stream(boardsResponse)
                     .filter(e-> e.equals(e.getId()) & e.equals(e.getName()))
                     .filter(a-> a.equals(a.getDescription()))
                     .collect(Collectors.toList());
         }
+
         return new ArrayList<>();
+
     }
 
     public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
         return new CreatedTrelloCard();
     }
+
 }
