@@ -50,11 +50,9 @@ public class TrelloClient {
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
         if (boardsResponse != null) {
+
             System.out.println("Trello test after if");
-            return Arrays.stream(boardsResponse)
-                    .filter(e -> e.equals(e.getId()) & e.equals(e.getName()))
-                    .filter(a -> a.equals(a.getDescription()))
-                    .collect(Collectors.toList());
+            return Arrays.asList(boardsResponse);
 
         }
         System.out.println("Trello test END");
@@ -65,5 +63,4 @@ public class TrelloClient {
     public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
         return new CreatedTrelloCard();
     }
-
 }
