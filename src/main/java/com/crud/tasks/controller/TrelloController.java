@@ -31,10 +31,15 @@ public class TrelloController {
 
             System.out.println("This board contains lists: ");
 
-            trelloBoardDto.getLists().forEach(trelloList ->
+            trelloBoardDto.getLists().forEach((trelloList -> {
+                trelloBoardDto.getLists().stream()
+                        .filter(e -> e.getId().equals(trelloBoardDto.getId())
+                                & e.getName().equals(trelloBoardDto.getName())
+                                & e.getId().equals(trelloBoardDto.getDescription()));
 
-                    System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed()));
+                System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed());
+            }));
+
         });
-
     }
 }
