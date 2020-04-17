@@ -35,22 +35,29 @@ public class TrelloClient {
 
     public List<TrelloBoardDto> getTrelloBoards() {
 
-        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/"+ userName +"/boards")
+        System.out.println("Trello test 0");
+
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/" + userName + "/boards")
+
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
-                .queryParam("userName",userName)
+                .queryParam("userName", userName)
                 .queryParam("fields", "name,id")
-                .queryParam("lists","all").build().encode().toUri();
+                .queryParam("lists", "all").build().encode().toUri();
+
+        System.out.println("Trello test after query");
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
 
         if (boardsResponse != null) {
+            System.out.println("Trello test after if");
             return Arrays.stream(boardsResponse)
-                    .filter(e-> e.equals(e.getId()) & e.equals(e.getName()))
-                    .filter(a-> a.equals(a.getDescription()))
+                    .filter(e -> e.equals(e.getId()) & e.equals(e.getName()))
+                    .filter(a -> a.equals(a.getDescription()))
                     .collect(Collectors.toList());
-        }
 
+        }
+        System.out.println("Trello test END");
         return new ArrayList<>();
 
     }
