@@ -13,7 +13,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class TrelloClient {
@@ -61,6 +60,13 @@ public class TrelloClient {
     }
 
     public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
-        return new CreatedTrelloCard();
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/cards")
+                .queryParam("key", trelloAppKey)
+                .queryParam("token", trelloToken)
+                .queryParam("name", trelloCardDto.getName())
+                .queryParam("desc", trelloCardDto.getDescription())
+                .queryParam("pos", trelloCardDto.getPos())
+                .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
+        return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
     }
 }
