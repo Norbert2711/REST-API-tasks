@@ -34,6 +34,8 @@ dependencies {
 		compile('io.springfox:springfox-swagger-ui:2.7.0')
 		compile('org.springframework.boot:spring-boot-starter-mail:1.5.7.RELEASE')
 
+		compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
+
 		//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
 }

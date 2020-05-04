@@ -53,7 +53,6 @@ public class TrelloClientTest {
         trelloBoards[0] = new TrelloBoardDto(
                 "test_id",
                 "test_board",
-                "description",
                 new ArrayList<>());
 
         URI uri = new URI("http://test.com/members/norbert2711/boards?key=test&token=test&fields=name,id&lists=all");
