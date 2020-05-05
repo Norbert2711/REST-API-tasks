@@ -25,30 +25,6 @@ public class TrelloController {
 
     }
 
-
-//        System.out.println("********** TEST *********");
-//
-//        List<TrelloBoardDto> trelloBoards = trelloService.fetchTrelloBoards();
-//
-//        trelloBoards.forEach(trelloBoardDto -> {
-//
-//            System.out.println(trelloBoardDto.getName() + " - " + trelloBoardDto.getId());
-//
-//            System.out.println("This board contains lists: ");
-//
-//            trelloBoardDto.getLists().forEach((trelloList -> {
-//                trelloBoardDto.getLists().stream()
-//                        .filter(e -> e.getId().equals(trelloBoardDto.getId())
-//                                & e.getName().equals(trelloBoardDto.getName())
-//                                & e.getId().equals(trelloBoardDto.getDescription()));
-//
-//                System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed());
-//            }));
-//
-//        });
-//        return trelloService.fetchTrelloBoards();
-
-
     @RequestMapping(method = RequestMethod.POST, value = "createTrelloCard")
     public CreatedTrelloCardDto createdTrelloCard(@RequestBody TrelloCardDto trelloCardDto) {
         return trelloFacade.createCard(trelloCardDto);
