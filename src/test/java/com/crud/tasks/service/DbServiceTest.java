@@ -37,7 +37,7 @@ public class DbServiceTest {
 
         //Then
         Assert.assertEquals(1, list.size());
-        Assert.assertNotNull("title", task.getTitle());
+        Assert.assertEquals("title", task.getTitle());
 
         //CleanUp
         try {
