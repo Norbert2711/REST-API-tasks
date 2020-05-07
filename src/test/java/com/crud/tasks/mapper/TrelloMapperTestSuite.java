@@ -3,6 +3,7 @@ package com.crud.tasks.mapper;
 
 import com.crud.tasks.domain.*;
 import com.crud.tasks.service.SimpleEmailService;
+import com.fasterxml.jackson.annotation.JacksonInject;
 import lombok.ToString;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,6 +24,9 @@ public class TrelloMapperTestSuite {
 
     @InjectMocks
     private TrelloMapper trelloMapper;
+
+    @InjectMocks
+    private TaskMapper taskMapper;
 
     @Test
     public void mapToBoards() {
@@ -107,7 +111,7 @@ public class TrelloMapperTestSuite {
     }
 
     @Test
-    public void mapToCardDto(){
+    public void mapToCardDto() {
         LOGGER.info("Start test: map to Card DTO");
         //Given
         TrelloCard trelloCard = new TrelloCard("test1", "Try mapping to Card DTO", "2", "11");
@@ -119,6 +123,64 @@ public class TrelloMapperTestSuite {
         System.out.println(mappedCardDto);
         Assert.assertEquals(trelloCard.getName(), mappedCardDto.getName());
 
+    }
+
+    @Test
+    public void mapToTask() {
+
+        //Given
+        Task task1 = new Task(2L, "title", "content");
+        TaskDto taskDto1 = new TaskDto(2L, "title", "content");
+
+        //When
+        Task mappToTask = taskMapper.mapToTask(taskDto1);
+
+        //Then
+        Assert.assertEquals(task1.getId(), mappToTask.getId());
+        Assert.assertEquals(task1.getTitle(), mappToTask.getTitle());
+        Assert.assertEquals(task1.getContent(), mappToTask.getContent());
+
+    }
+
+    @Test
+    public void mapToTaskDto() {
+
+        //Given
+        Task task1 = new Task(2L, "title", "content");
+        TaskDto taskDto1 = new TaskDto(2L, "title", "content");
+
+        //When
+        TaskDto mapToTaskDto = taskMapper.mapToTaskDto(task1);
+
+        //Then
+        Assert.assertEquals(taskDto1.getId(), mapToTaskDto.getId());
+        Assert.assertEquals(taskDto1.getTitle(), mapToTaskDto.getTitle());
+        Assert.assertEquals(taskDto1.getContent(), mapToTaskDto.getContent());
+
+    }
+
+    @Test
+    public void mapTaskDtoListTest() {
+
+        //Given
+        TaskDto taskDto1 = new TaskDto(2L, "title", "content");
+        List<TaskDto> taskDtoList = Arrays.asList(taskDto1);
+
+        Task task1 = new Task(2L, "title", "content");
+        List<Task> taskList = Arrays.asList(task1);
+
+        //When
+        List<TaskDto> mappedListDto = taskMapper.mapTaskDtoList(taskList);
+
+        //Then
+        Assert.assertNotNull(mappedListDto);
+        Assert.assertEquals(1, mappedListDto.size());
+
+        mappedListDto.forEach(t -> {
+            Assert.assertEquals(taskDto1.getId(), t.getId());
+            Assert.assertEquals(taskDto1.getTitle(), t.getTitle());
+            Assert.assertEquals(taskDto1.getContent(),t.getContent());
+        });
     }
 
 }

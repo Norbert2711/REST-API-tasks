@@ -38,12 +38,11 @@ public class TrelloClient {
 
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
-                .queryParam("userName", trelloConfig.getUserName())
                 .queryParam("fields", "name,id")
                 .queryParam("lists", "all").build().encode().toUri();
 
         System.out.println("Trello test after query");
-
+        System.out.println(url);
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
                 return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));

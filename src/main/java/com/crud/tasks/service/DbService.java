@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @Service
 public class DbService {
+
     @Autowired
     private TaskRepository repository;
 
     public List<Task> getAllTasks() {
         return repository.findAll();
     }
-
     public Task getTaskById(final Long id) {
         return repository.findById(id).orElse(null);
     }
