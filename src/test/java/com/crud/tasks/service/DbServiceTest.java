@@ -55,18 +55,15 @@ public class DbServiceTest {
         List<Task> taskList = new ArrayList<>();
 
         //When
-       Optional<Task> id = taskRepository.findById(task.getId());
+        Optional<Task> id = taskRepository.findById(task.getId());
 
         //Then
         Assert.assertEquals(Optional.empty(), id);
         Long taskId = task.getId();
 
         //CleanUp
-        try {
-            dbService.deleteTask(taskId);
-        } catch (Exception e) {
-            //
-        }
+        taskRepository.findById(taskId);
+
     }
 
     @Test
@@ -82,11 +79,8 @@ public class DbServiceTest {
         Long taskId = task.getId();
 
         //CleanUp
-        try {
-            dbService.deleteTask(taskId);
-        } catch (Exception e) {
-            //
-        }
+        taskRepository.save(task);
+
     }
 
 
@@ -107,11 +101,8 @@ public class DbServiceTest {
         Long taskId = task.getId();
 
         //CleanUp
-        try {
-            dbService.deleteTask(taskId);
-        } catch (Exception e) {
-            //
-        }
+        taskRepository.delete(task);
+
     }
 
 }
