@@ -36,6 +36,7 @@ dependencies {
 
 		compile 'org.springframework.social:spring-social-facebook:2.0.3.RELEASE'
 
+		compile('com.google.code.gson:gson:2.8.2')
 		//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
 }
