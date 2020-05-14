@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,18 +40,14 @@ public class TaskControllerTest {
     @MockBean
     private TaskMapper taskMapper;
 
-    @MockBean
-    private TaskRepository taskRepository;
-
     @Test
     public void getAllTask() throws Exception {
 
         //Given
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("1", "Test title", "Test content"));
+        List<TaskDto> taskListDto = new ArrayList<>();
+        taskListDto.add(new TaskDto(1L, "Test title", "Test content"));
 
-        when(service.getAllTasks()).thenReturn(taskList);
-        System.out.println(taskList.size());
+        when(taskMapper.mapTaskDtoList(anyList())).thenReturn(taskListDto);
 
         //When & Then
         mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
@@ -65,14 +61,12 @@ public class TaskControllerTest {
     public void deleteTask() throws Exception {
 
         //Given
-        Task task = new Task(1L, "Test title", "Test content");
-
-        when(service.getTask(1L)).thenReturn(Optional.of(task));
 
         //When & Then
-        mockMvc.perform(delete("/v1/task/deleteTask?taskId=1").contentType(MediaType.APPLICATION_JSON)
-                .param("taskId", "1"))
+        mockMvc.perform(delete("/v1/task/deleteTask?taskId=1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        verify(service, times(1)).deleteTask(1L);
 
     }
 
@@ -83,15 +77,20 @@ public class TaskControllerTest {
         TaskDto taskDto = new TaskDto(1L, "Test titleDto", "Test contentDto");
         Task task = new Task(1L, "Test title", "Test content");
 
-        when(taskMapper.mapToTaskDto(ArgumentMatchers.any(Task.class))).thenReturn(taskDto);
+        when(taskMapper.mapToTask(ArgumentMatchers.any(TaskDto.class))).thenReturn(task);
         when(service.saveTask(ArgumentMatchers.any(Task.class))).thenReturn(task);
+        when(taskMapper.mapToTaskDto(ArgumentMatchers.any(Task.class))).thenReturn(taskDto);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(taskDto);
 
         //When & Then
-        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON)
+                .content(jsonContent))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id", is(1L)))
-                .andExpect(jsonPath("$[0].title", is("Test update")))
-                .andExpect(jsonPath("$[0].content", is("Test content update")));
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Test titleDto")))
+                .andExpect(jsonPath("$.content", is("Test contentDto")));
 
     }
 
@@ -111,6 +110,8 @@ public class TaskControllerTest {
         mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON)
                 .content(jsonContent))
                 .andExpect(status().isOk());
+
+        verify(service, times(1)).saveTask(task);
     }
 
 }
