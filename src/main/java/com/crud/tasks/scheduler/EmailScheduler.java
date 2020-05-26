@@ -1,6 +1,5 @@
 package com.crud.tasks.scheduler;
 
-
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
 import com.crud.tasks.repository.TaskRepository;
@@ -27,12 +26,13 @@ public class EmailScheduler {
     //@Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
 
+
         long size = taskRepository.count();
 
         String taskQuantity;
-        if(size == 1) {
+        if (size == 1) {
             taskQuantity = "task";
-        }else{
+        } else {
             taskQuantity = "tasks";
         }
 
@@ -41,6 +41,7 @@ public class EmailScheduler {
                 SUBJECT,
                 "Curlenty in database you got: " + size + taskQuantity,
                 null));
+
 
     }
 }
