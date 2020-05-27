@@ -36,11 +36,11 @@ public class MailCreatorService {
         context.setVariable("task_url", "https://norbert2711.github.io/");
         context.setVariable("button", "Visit website");
         context.setVariable("show_button", false);
-        context.setVariable("is_friend",false);
+        context.setVariable("is_friend", false);
         context.setVariable("admin_config", adminConfig);
-        context.setVariable("application_functionality",functionality);
+        context.setVariable("application_functionality", functionality);
         context.setVariable("company_name",
-                companyConfig.getCompanyName()+"." + "\n" +
+                companyConfig.getCompanyName() + "." + "\n" +
                         companyConfig.getCompanyGoal());
         context.setVariable("company_details", "Email: " + companyConfig.getCompanyEmail() + "\n" +
                 "Phone: " + companyConfig.getCompanyPhone());

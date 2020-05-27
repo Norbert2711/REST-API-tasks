@@ -26,19 +26,13 @@ public class SimpleEmailService {
     @Autowired
     private MailCreatorService mailCreatorService;
 
-    @Autowired
-    private MailCreatorMailOnceADayService mailCreatorMailOnceADayService;
-
-    @Autowired
-    @Qualifier("templateEngine")
-    private TemplateEngine templateEngine;
-
     public void send(final Mail mail) {
 
         LOGGER.info("Starting email preparation...");
 
         try {
             javaMailSender.send(createMimeMessage(mail));
+
             LOGGER.info("Email has been sent.");
 
         } catch (MailException e) {
@@ -54,20 +48,8 @@ public class SimpleEmailService {
             messageHelper.setTo(mail.getMailTo());
             messageHelper.setSubject(mail.getSubject());
             messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
-            messageHelper.setText(mailCreatorMailOnceADayService.buildTrelloEmailOnceADay(mail.getMessage()),true);
         };
 
-    }
-
-    private String choseMailContents(String message, MailCreatorService mailCreatorService,
-                                     MailCreatorMailOnceADayService mailCreatorMailOnceADayService) {
-//HERE
-        if (templateEngine == MailCreatorService.class) {
-            return mailCreatorService.buildTrelloCardEmail(message);
-        } else if (MailCreatorMailOnceADayService == templateEngine) {
-            return mailCreatorMailOnceADayService.buildTrelloEmailOnceADay(message);
-        }
-        return "";
     }
 
     private SimpleMailMessage createMailMessage(final Mail mail) {
