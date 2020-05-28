@@ -32,7 +32,7 @@ public class DbServiceTest {
         Long taskId = task.getId();
 
         //Then
-        Assert.assertEquals(1, list.size());
+        Assert.assertEquals(2, list.size());
         Assert.assertEquals("title", task.getTitle());
 
         //CleanUp
