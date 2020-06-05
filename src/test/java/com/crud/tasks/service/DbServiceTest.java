@@ -22,7 +22,7 @@ public class DbServiceTest {
 
     @Test
     public void getAllTasksTest() {
-
+//to co bylo wczesniej +...
         //Given
         Task task = new Task(1L, "title", "test content");
 

@@ -36,7 +36,7 @@ public class SimpleEmailService {
             LOGGER.info("Email has been sent.");
 
         } catch (MailException e) {
-            LOGGER.error("Failed to process email sending: " + e.getMessage(), e);
+            LOGGER.error("Failed to process email sending: " + e);
 
         }
     }

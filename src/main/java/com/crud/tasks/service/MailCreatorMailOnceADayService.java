@@ -5,7 +5,7 @@ import com.crud.tasks.config.CompanyConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class MailCreatorMailOnceADayService {
 
     @Autowired
     @Qualifier("templateEngine")
-    private TemplateEngine templateEngine;
+    private ITemplateEngine templateEngine;
 
     @Autowired
     private AdminConfig adminConfig;
